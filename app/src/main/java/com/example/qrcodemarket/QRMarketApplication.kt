@@ -2,8 +2,11 @@ package com.example.qrcodemarket
 
 import android.app.Application
 import com.example.qrcodemarket.data.network.MyApi
+import com.example.qrcodemarket.data.network.SyntheticApi
 import com.example.qrcodemarket.data.network.response.NetworkConnectionInterceptor
+import com.example.qrcodemarket.data.respositories.StatisticalRepository
 import com.example.qrcodemarket.data.respositories.UserRepository
+import com.example.qrcodemarket.ui.admin.statistical.StatisticalViewModel
 import com.example.qrcodemarket.ui.auth.AuthViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -21,6 +24,9 @@ class QRMarketApplication: Application(), KodeinAware {
         bind() from this.singleton { MyApi(this.instance()) }
         bind() from this.singleton { UserRepository(this.instance()) }
         bind() from this.singleton { AuthViewModelFactory(this.instance()) }
+        bind() from singleton { SyntheticApi() }
+        bind() from singleton { StatisticalRepository(instance()) }
+        bind() from singleton { StatisticalViewModel(instance()) }
     }
 
 }

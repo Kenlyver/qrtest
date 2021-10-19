@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -31,7 +32,7 @@ class StatisticalFragment : Fragment() {
 
     lateinit var mView: View
     private lateinit var searchView: SearchView
-    private lateinit var viewModel: StatisticalViewModel
+    private val viewModel: StatisticalViewModel by viewModels()
     private lateinit var factory: StatisticalViewModelFactory
     private lateinit var newData: List<getAccessAllUser.Data>
     private lateinit var binding:FragmentStatisticalBinding
@@ -63,20 +64,18 @@ class StatisticalFragment : Fragment() {
         return mView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val api = SyntheticApi()
-        val repository = StatisticalRepository(api)
-        factory = StatisticalViewModelFactory(repository)
-        viewModel = ViewModelProviders.of(this,factory).get(StatisticalViewModel::class.java)
-        viewModel.getStatistical()
-        viewModel.statisticals.observe(viewLifecycleOwner, Observer { statisticals ->
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.statisticals.observe(viewLifecycleOwner, { statisticals ->
             recyAllAccess.also {
                 it.layoutManager = LinearLayoutManager(requireContext())
                 it.setHasFixedSize(true)
                 it.adapter = StatisticalAdapter(statisticals)
             }
         })
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "Handle Error here!", Toast.LENGTH_SHORT).show()
+        }
     }
 
 //    private fun setupBinding(viewModel: StatisticalViewModel) {
