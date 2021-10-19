@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import com.example.qrcodemarket.data.model_new.Statistical
+import com.example.qrcodemarket.data.network.response.ApiException
 import com.example.qrcodemarket.data.respositories.StatisticalRepository
 import com.example.qrcodemarket.util.Coroutines
 import kotlinx.coroutines.Dispatchers
@@ -22,10 +23,17 @@ class StatisticalViewModel(
     val statisticals: LiveData<List<Statistical>>
         get() = _statisticals
 
-     fun getStatistical(){
+    private val _error = MutableLiveData<ApiException?>()
+    val error: LiveData<ApiException?> = _error
+
+     init {
          viewModelScope.launch {
-             val data = withContext(Dispatchers.IO) { repository.getStatistical() }
-             _statisticals.value = data
+             try {
+                 val data = withContext(Dispatchers.IO) { repository.getStatistical() }
+                 _statisticals.value = data
+             } catch (e: ApiException) {
+                 _error.value = e
+             }
          }
     }
 
