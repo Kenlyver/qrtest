@@ -1,6 +1,6 @@
 package com.example.qrcodemarket.data.network
 
-import com.example.qrcodemarket.data.model.InsertUser
+
 import com.example.qrcodemarket.data.network.response.AuthResponse
 import com.example.qrcodemarket.data.network.response.NetworkConnectionInterceptor
 import retrofit2.Call
@@ -30,7 +30,7 @@ interface MyApi {
 
             return Retrofit.Builder()
                 .client(okkHttpclient)
-                .baseUrl("http://192.168.1.8:80/myapi/public/")
+                .baseUrl("http://192.168.1.2:80/myapi/public/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)

@@ -1,47 +1,45 @@
-package com.example.qrcodemarket.ui.admin.statistical
-
+package com.example.qrcodemarket.ui.admin.market
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.qrcodemarket.data.model.StatisticalData
-import com.example.qrcodemarket.data.model.dataStatistical
+import com.example.qrcodemarket.data.model.MarketData
+import com.example.qrcodemarket.data.model.dataMarketManage
 import com.example.qrcodemarket.data.network.response.RetroInstance
 import com.example.qrcodemarket.data.network.response.RetroService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
-class StatisticalViewModel() : ViewModel() {
-    var recyclerListData: MutableLiveData<dataStatistical>
-    var statisticalAdapter: StatisticalAdapter
+class MarketManageViewModel():ViewModel() {
+    var recyclerListData: MutableLiveData<dataMarketManage>
+    var marketManageAdapter: MarketManageAdapter
 
     init {
         recyclerListData = MutableLiveData()
-        statisticalAdapter = StatisticalAdapter()
+        marketManageAdapter = MarketManageAdapter()
     }
 
-    fun getAdapter(): StatisticalAdapter {
-        return statisticalAdapter
+    fun getAdapter(): MarketManageAdapter {
+        return marketManageAdapter
     }
 
-    fun setAdapterData(data: ArrayList<StatisticalData>?){
+    fun setAdapterData(data: ArrayList<MarketData>?){
         if (data != null) {
-            statisticalAdapter.setDataList(data)
+            marketManageAdapter.setDataList(data)
         }
-        statisticalAdapter.notifyDataSetChanged()
+        marketManageAdapter.notifyDataSetChanged()
     }
 
-    fun getRecyclerListDataObserver(): MutableLiveData<dataStatistical> {
+    fun getRecyclerListDataObserver(): MutableLiveData<dataMarketManage> {
         return recyclerListData
     }
 
     fun makeAPICall() {
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
-        val call = retroInstance.dataStatistical()
-        call.enqueue(object : Callback<dataStatistical> {
-            override fun onResponse(call: Call<dataStatistical>, response: Response<dataStatistical>) {
+        val call = retroInstance.dataMarketManage()
+        call.enqueue(object : Callback<dataMarketManage> {
+            override fun onResponse(call: Call<dataMarketManage>, response: Response<dataMarketManage>) {
                 if(response.isSuccessful){
                     recyclerListData.postValue(response.body())
                     Log.i("response","success "+response.body())
@@ -51,7 +49,7 @@ class StatisticalViewModel() : ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<dataStatistical>, t: Throwable) {
+            override fun onFailure(call: Call<dataMarketManage>, t: Throwable) {
                 recyclerListData.postValue(null)
                 Log.i("response","fail")
             }

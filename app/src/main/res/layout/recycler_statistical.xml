@@ -3,9 +3,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View" />
         <variable name="recyclerStatistical"
-                  type="com.example.qrcodemarket.data.model_new.Statistical"/>
+                  type="com.example.qrcodemarket.data.model.StatisticalData"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

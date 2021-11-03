@@ -5,13 +5,13 @@
 
     <data>
         <variable name="viewModel"
-                  type="com.example.qrcodemarket.ui.auth.HistoryViewModel"/>
+                  type="com.example.qrcodemarket.ui.user.History.HistoryViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/HistoryFragment"
-            tools:context=".ui.fragment.HistoryFragment">
+            tools:context=".ui.user.History.HistoryFragment">
         <include android:id="@+id/toolbar" layout="@layout/toolbar"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleHistory"

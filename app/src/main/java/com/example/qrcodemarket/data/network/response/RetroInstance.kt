@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetroInstance {
     companion object{
 
-        val BASE_URL = "http://192.168.1.7:80/myapi/public/"
+        val BASE_URL = "http://192.168.1.2:80/myapi/public/"
 
         fun getRetroInstance():Retrofit{
             return Retrofit.Builder()

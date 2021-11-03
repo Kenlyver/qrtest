@@ -2,34 +2,35 @@ package com.example.qrcodemarket.ui.admin.statistical
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.qrcodemarket.R
-import com.example.qrcodemarket.data.model_new.Statistical
+import com.example.qrcodemarket.data.model.StatisticalData
 import com.example.qrcodemarket.databinding.RecyclerStatisticalBinding
 
-class StatisticalAdapter(
-    private val access: List<Statistical>
-) : RecyclerView.Adapter<StatisticalAdapter.StatisticalViewHolder>() {
+class StatisticalAdapter() : RecyclerView.Adapter<StatisticalAdapter.MyViewHolder>() {
+
+    var access = ArrayList<StatisticalData>()
+
+    fun setDataList(data:ArrayList<StatisticalData>){
+        this.access = data
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatisticalAdapter.MyViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = RecyclerStatisticalBinding.inflate(layoutInflater)
+        return MyViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: StatisticalAdapter.MyViewHolder, position: Int) {
+        holder.bind(access[position])
+    }
 
     override fun getItemCount(): Int = access.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        StatisticalViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.recycler_statistical,
-                parent,
-                false
-            )
-        )
-
-    override fun onBindViewHolder(holder: StatisticalViewHolder, position: Int) {
-        holder.recyclerStatisticalBinding.recyclerStatistical = access[position]
+    class MyViewHolder(val binding: RecyclerStatisticalBinding):RecyclerView.ViewHolder(binding.root){
+        fun bind(data: StatisticalData){
+            binding.recyclerStatistical = data
+            binding.executePendingBindings()
+        }
     }
-
-    inner class StatisticalViewHolder(
-        val recyclerStatisticalBinding: RecyclerStatisticalBinding
-    ) : RecyclerView.ViewHolder(recyclerStatisticalBinding.root)
 
 }

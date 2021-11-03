@@ -1,6 +1,5 @@
 package com.example.qrcodemarket.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.qrcodemarket.R
-import com.example.qrcodemarket.data.model.UpdatePassword
 import com.example.qrcodemarket.data.network.QRApi
 import com.example.qrcodemarket.ui.auth.AppPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,11 +29,11 @@ class ChangePasswordFragment : Fragment() {
         }
     }
 
-    var disposable: Disposable? = null
-    var loginName: String? = null
-    var currentPassword: String? = null
-    var newPassword: String? = null
-    var confirmPassword: String? = null
+    lateinit var disposable: Disposable
+    lateinit var loginName: String
+    lateinit var currentPassword: String
+    lateinit var newPassword: String
+    lateinit var confirmPassword: String
     val insertApi by lazy {
         QRApi.create()
     }
@@ -81,8 +79,8 @@ class ChangePasswordFragment : Fragment() {
         } else {
             loginName = AppPreferences.username
             val dataPassword: UpdatePassword.Data
-            dataPassword = UpdatePassword.Data(currentPassword!!,newPassword!!)
-            disposable = insertApi.updatePassword(loginName!!, dataPassword)
+            dataPassword = UpdatePassword.Data(currentPassword,newPassword)
+            disposable = insertApi.updatePassword(loginName, dataPassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
